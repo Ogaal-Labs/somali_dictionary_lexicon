@@ -1,0 +1,4 @@
+.DS_Store
+__pycache__/
+*.pyc
+qaamuuska_checkpoint_v3.json
