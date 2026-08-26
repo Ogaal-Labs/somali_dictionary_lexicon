@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qaamuuska-NLP — Structured Somali Lexical Explorer</title>
+<meta name="description" content="A structured lexical explorer over Qaamuuska-NLP, a 46,314-record reconstruction of Qaamuuska Af-Soomaaliga.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+
+<header class="masthead">
+    <div class="masthead__inner">
+        <a class="wordmark" href="#/">Qaamuuska<span>-NLP</span></a>
+        <nav class="tabs" aria-label="Sections">
+            <a class="tabs__link" href="#/" aria-current="page">Dictionary</a>
+            <!-- Opens the preprint itself, in a new tab, so the app keeps its state. -->
+            <a class="tabs__link" href="qaamuuska-nlp-somali-lexicon-preprint-2026.pdf"
+               target="_blank" rel="noopener">Research</a>
+        </nav>
+    </div>
+</header>
+
+<!--
+  The search field lives here, outside every re-rendered region, so typing
+  never destroys the input that has focus. Only #hero-head and #content are
+  replaced when the view changes.
+-->
+<main id="main">
+
+    <section class="hero shell" id="hero-head">
+        <h1 class="hero__title">Qaamuuska-NLP</h1>
+        <p class="hero__subtitle">Structured Somali Lexical Explorer</p>
+    </section>
+
+    <div class="search-zone" id="search-zone">
+        <div class="shell">
+            <div class="search">
+                <label class="sr-only" for="q">Search a Somali word</label>
+                <input class="search__input" id="q" type="search" autocomplete="off"
+                       autocapitalize="off" spellcheck="false"
+                       placeholder="Search a Somali word&hellip;">
+                <span class="search__key" data-hint aria-hidden="true">/</span>
+                <button class="search__key search__key--clear" type="button" data-clear hidden>Clear</button>
+            </div>
+            <p class="search__status" data-status role="status" aria-live="polite"></p>
+        </div>
+    </div>
+
+    <div id="content"></div>
+
+</main>
+
+<!-- ===================================================================== -->
+<!-- Templates                                                              -->
+<!-- ===================================================================== -->
+
+<template id="tpl-home">
+    <section class="shell home-body">
+        <ul class="stats" data-stats>
+            <li class="stats__item"><span class="stats__value">46,314</span><span class="stats__label">records</span></li>
+            <li class="stats__item"><span class="stats__value">34,726</span><span class="stats__label">nouns</span></li>
+            <li class="stats__item"><span class="stats__value">11,445</span><span class="stats__label">verbs</span></li>
+            <li class="stats__item"><span class="stats__value">32,801</span><span class="stats__label">definitions</span></li>
+        </ul>
+
+        <hr class="rule">
+
+        <p class="browse" data-browse>
+            <span class="browse__label">Browse</span>
+        </p>
+
+        <div class="note" data-note></div>
+    </section>
+</template>
+
+<!-- ===================================================================== -->
+<!-- Research view — content from the preprint                             -->
+<!-- ===================================================================== -->
+
+<template id="tpl-research">
+<article class="paper shell">
+
+    <header class="paper__head">
+        <p class="page__eyebrow">arXiv preprint &middot; August 2026</p>
+        <h1 class="paper__title">Qaamuuska-NLP: A Structured 46K-Entry Somali Lexicon Extracted from a Print Dictionary</h1>
+        <p class="paper__authors">Abdullahi Mohamud Ahmed<sup>1</sup> &nbsp;and&nbsp; Abdulkadir Ugas<sup>1,2</sup></p>
+        <p class="paper__affil">
+            <sup>1</sup>Ogaal Labs, Somalia<br>
+            <sup>2</sup>Chungbuk National University, South Korea
+        </p>
+        <p class="paper__actions">
+            <a class="button button--solid" href="qaamuuska-nlp-somali-lexicon-preprint-2026.pdf" target="_blank" rel="noopener">Read the PDF</a>
+            <a class="button" href="https://github.com/Ogaal-Labs/somali_dictionary_lexicon" target="_blank" rel="noopener">Extraction code</a>
+            <a class="button" href="#/">Explore the lexicon</a>
+        </p>
+    </header>
+
+    <section class="section">
+        <h2 class="section__heading">Abstract</h2>
+        <div class="abstract prose">
+            <p>Somali NLP still has relatively few structured lexical resources that preserve the linguistic
+            information found in traditional dictionaries. We present <strong>Qaamuuska-NLP</strong>, a
+            machine-readable reconstruction of <em>Qaamuuska Af-Soomaaliga</em>, the 2012 monolingual Somali
+            dictionary by Puglielli and Mansuur. The resource contains <strong>46,314 dictionary records</strong>
+            extracted directly from the PDF's native text layer using a deterministic, rule-based pipeline,
+            without OCR or machine-learning-based extraction. Where available in the source, records include part
+            of speech, noun gender, verb class and transitivity, plural information, subject domains, synonym
+            references, cross-references, homonym indices, and numbered definitions. The original entry text is
+            retained alongside the parsed representation to support inspection against the source.</p>
+
+            <p>We describe the extraction pipeline, the structure and coverage of the resulting resource, and the
+            main classes of residual parsing errors. We also examine the distribution of grammatical and lexical
+            information in the dictionary and use a simple surface-form prediction probe to test how strongly
+            selected morphological labels are reflected in Somali word forms. Qaamuuska-NLP complements existing
+            Somali morphological, lemmatization, corpus, and multi-dictionary lexical resources by preserving the
+            structure of a single major monolingual dictionary in a reproducible computational form.</p>
+        </div>
+        <p class="keywords">Keywords &nbsp;&middot;&nbsp; Somali NLP &nbsp;&middot;&nbsp; computational lexicography
+        &nbsp;&middot;&nbsp; lexical resources &nbsp;&middot;&nbsp; dictionary digitization
+        &nbsp;&middot;&nbsp; morphology &nbsp;&middot;&nbsp; low-resource languages</p>
+    </section>
+
+    <section class="section">
+        <h2 class="section__heading">The source dictionary</h2>
+        <div class="prose">
+            <p><em>Qaamuuska Af-Soomaaliga</em> (Dictionary of the Somali Language), edited by Annarita Puglielli
+            and Cabdalla Cumar Mansuur and published by Roma Tre Press in 2012, is a major monolingual reference
+            dictionary for Somali. Its entries contain more than headwords and definitions: they record
+            grammatical categories, noun gender, verbal information, plural forms, semantic distinctions, subject
+            labels, synonyms, homonyms, and cross-references.</p>
+
+            <p>The dictionary is distributed as a fixed two-column PDF rather than a documented fielded dataset.
+            Its text can be extracted digitally, but the lexical structure is expressed through typography,
+            abbreviations, entry ordering, superscript markers, punctuation, and recurring conventions. Plain text
+            extraction therefore does not directly provide records that can be searched by grammatical field,
+            linked through cross-references, or used systematically in NLP pipelines.</p>
+
+            <p>The extraction processes PDF pages 24&ndash;916 with <code>pdfplumber</code>, working from the
+            native text layer rather than rendered page images.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section__heading">Extraction pipeline</h2>
+        <ol class="pipeline">
+            <li>
+                <div>
+                    <h3>Column-aware text extraction</h3>
+                    <p>Each page is divided at its horizontal midpoint and the two columns are extracted
+                    independently, left before right, so the intended reading order survives. Running headers are
+                    removed with source-specific heuristics and the result is appended to a continuous buffer, so
+                    entries spanning a page break are recovered intact.</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h3>Entry segmentation</h3>
+                    <p>Records are located using a recurring entry-start pattern: a headword, an optional
+                    superscript homonym marker, then one of the dictionary's recognised part-of-speech codes. The
+                    span between one entry start and the next becomes a candidate record body.</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h3>Field parsing</h3>
+                    <p>Each candidate is decomposed into headword, homonym index, original POS code, normalized
+                    POS category, noun gender, verb conjugation class and transitivity, plural information,
+                    parenthetical verbal information, subject-domain labels, numbered definitions, synonym
+                    references and cross-references. Numbered definitions are kept separate rather than stored as
+                    one undifferentiated string.</p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <h3>Cross-reference resolution</h3>
+                    <p>A second pass builds an index over the extracted headwords and connects each redirect
+                    record &mdash; signalled in the source by markers such as <code>ld</code> and
+                    <code>eeg</code> &mdash; to the integer identifier of its target, using the homonym marker
+                    where the reference carries one.</p>
+                </div>
+            </li>
+        </ol>
+    </section>
+
+    <section class="section">
+        <h2 class="section__heading">Coverage of principal extracted fields</h2>
+        <div class="table-wrap">
+            <table class="data">
+                <caption>Table 1 &mdash; percentages are of all 46,314 records</caption>
+                <thead>
+                    <tr><th>Field / property</th><th class="num">Records</th><th class="num">% of all</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Total records</td><td class="num">46,314</td><td class="num">100.0</td></tr>
+                    <tr><td>Definition(s)</td><td class="num">25,240</td><td class="num">54.5</td></tr>
+                    <tr><td>Redirect (<code>ld</code> / <code>eeg</code>)</td><td class="num">21,032</td><td class="num">45.4</td></tr>
+                    <tr><td>Redirect resolved to target ID</td><td class="num">20,075</td><td class="num">43.3</td></tr>
+                    <tr><td>Gender annotation</td><td class="num">34,570</td><td class="num">74.6</td></tr>
+                    <tr><td>Verb-class annotation</td><td class="num">11,444</td><td class="num">24.7</td></tr>
+                    <tr><td>Synonym reference(s)</td><td class="num">11,415</td><td class="num">24.6</td></tr>
+                    <tr><td>Homonym index</td><td class="num">9,212</td><td class="num">19.9</td></tr>
+                    <tr><td>Noun plural metadata</td><td class="num">4,698</td><td class="num">10.1</td></tr>
+                    <tr><td>Subject-domain label</td><td class="num">1,945</td><td class="num">4.2</td></tr>
+                    <tr><td>Predicative-only (<code>khabar</code>)</td><td class="num">529</td><td class="num">1.1</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section__heading">Part-of-speech distribution</h2>
+        <div class="table-wrap">
+            <table class="data">
+                <caption>Table 2</caption>
+                <thead>
+                    <tr><th>Part of speech</th><th class="num">Records</th><th class="num">%</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Noun</td><td class="num">34,726</td><td class="num">75.0</td></tr>
+                    <tr><td>Verb</td><td class="num">11,445</td><td class="num">24.7</td></tr>
+                    <tr><td>Exclamation</td><td class="num">71</td><td class="num">0.2</td></tr>
+                    <tr><td>Pronoun</td><td class="num">54</td><td class="num">0.1</td></tr>
+                    <tr><td>Particle</td><td class="num">11</td><td class="num">&lt; 0.1</td></tr>
+                    <tr><td>Preposition</td><td class="num">5</td><td class="num">&lt; 0.1</td></tr>
+                    <tr><td>Numeral</td><td class="num">2</td><td class="num">&lt; 0.1</td></tr>
+                    <tr class="total"><td>Total</td><td class="num">46,314</td><td class="num">100.0</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="prose" style="margin-top:26px">
+            <p>Among the 34,726 noun records, <strong>34,570 carry a gender annotation</strong> (99.6% of nouns):
+            18,410 feminine, 13,934 masculine, and 2,226 marked as permitting either. Of the 11,445 verb records,
+            11,444 carry a conjugation class &mdash; 4,170 Class I, 3,067 Class II, 2,193 Class III and 2,014
+            Class IV &mdash; alongside 6,528 intransitive, 4,821 transitive and 96 bitransitive markings.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section__heading">Subject domains</h2>
+        <div class="table-wrap">
+            <table class="data">
+                <caption>Table 3 &mdash; 1,945 domain-labelled records across 16 domains</caption>
+                <thead>
+                    <tr><th>Domain</th><th>Source label</th><th class="num">Records</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Medicine</td><td><code>daaw.</code></td><td class="num">360</td></tr>
+                    <tr><td>Physics</td><td><code>fiis.</code></td><td class="num">239</td></tr>
+                    <tr><td>Mathematics</td><td><code>xis.</code></td><td class="num">226</td></tr>
+                    <tr><td>Biology</td><td><code>baay.</code></td><td class="num">220</td></tr>
+                    <tr><td>Chemistry</td><td><code>kiim.</code></td><td class="num">219</td></tr>
+                    <tr><td>Religion</td><td><code>dii.</code></td><td class="num">171</td></tr>
+                    <tr><td>Geography</td><td><code>juqr.</code></td><td class="num">152</td></tr>
+                    <tr><td>Geology</td><td><code>jool.</code></td><td class="num">106</td></tr>
+                    <tr><td>Botany</td><td><code>bot.</code></td><td class="num">104</td></tr>
+                    <tr><td>Music</td><td><code>muus.</code></td><td class="num">39</td></tr>
+                    <tr><td>Politics</td><td><code>siyaa.</code></td><td class="num">36</td></tr>
+                    <tr><td>History</td><td><code>taar.</code></td><td class="num">35</td></tr>
+                    <tr><td>Commerce</td><td><code>dhaq.</code></td><td class="num">14</td></tr>
+                    <tr><td>Zoology</td><td><code>c.nafl</code></td><td class="num">13</td></tr>
+                    <tr><td>Law</td><td><code>qaan.</code></td><td class="num">8</td></tr>
+                    <tr><td>Psychology</td><td><code>c.naf</code></td><td class="num">3</td></tr>
+                    <tr class="total"><td>Total</td><td></td><td class="num">1,945</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="prose" style="margin-top:26px">
+            <p>Medicine, physics, mathematics, biology and chemistry together contribute 1,264 entries, roughly
+            65% of all domain-labelled records. This distribution reflects the source dictionary's coverage of
+            specialized terminology and should not be read as the topical distribution of Somali vocabulary as a
+            whole.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section__heading">Surface-form predictability of morphological labels</h2>
+        <div class="prose">
+            <p>As a diagnostic, a suffix back-off classifier &mdash; trained only on word-final character
+            sequences of one to six characters, under an 80/20 <strong>headword-disjoint</strong> split &mdash;
+            was asked to predict labels from the surface form alone. It receives no definition, dictionary
+            metadata, contextual sentence, external corpus, or pretrained representation.</p>
+        </div>
+        <div class="table-wrap">
+            <table class="data">
+                <caption>Table 4 &mdash; surface-form prediction results</caption>
+                <thead>
+                    <tr>
+                        <th>Task</th><th class="num">Records</th>
+                        <th class="num">Majority acc.</th><th class="num">Suffix acc.</th><th class="num">Macro-F1</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Verb class (I&ndash;IV)</td><td class="num">11,444</td><td class="num">0.378</td><td class="num">0.935</td><td class="num">0.936</td></tr>
+                    <tr><td>Noun gender (m/f/b)</td><td class="num">34,570</td><td class="num">0.538</td><td class="num">0.864</td><td class="num">0.874</td></tr>
+                    <tr><td>POS (noun/verb/other)</td><td class="num">46,314</td><td class="num">0.746</td><td class="num">0.869</td><td class="num">0.560</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="prose" style="margin-top:26px">
+            <p>Verb conjugation class and noun gender are strongly predictable from word-final morphology, which
+            is consistent with the role of suffixation in Somali. Coarse part of speech behaves differently: the
+            classifier improves accuracy from 0.746 to 0.869, but its macro-F1 is only 0.560, because nouns
+            account for about 75% of records and the remaining categories represent a very small fraction of the
+            lexicon.</p>
+            <p>The experiment does <strong>not</strong> establish the accuracy of a Somali morphological analyzer
+            on independent running text. It is a within-resource surface-form predictability analysis, not an
+            extrinsic downstream evaluation.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section__heading">Limitations</h2>
+        <div class="prose">
+            <ul>
+                <li>The resource derives from a <strong>single dictionary</strong>. Its coverage, sense
+                distinctions, terminology, dialectal choices and grammatical conventions reflect the editorial
+                decisions of <em>Qaamuuska Af-Soomaaliga</em> rather than a balanced sample of contemporary Somali
+                usage.</li>
+                <li>The pipeline is deliberately <strong>source-specific</strong>. Its rules depend on this
+                dictionary's two-column layout, abbreviations, typography and entry patterns.</li>
+                <li>Characters are preserved without a general Unicode normalization pass. More than one
+                apostrophe code point occurs in the source, which affects exact headword matching, duplicate
+                detection and cross-reference resolution. <em>This explorer folds those code points at query time,
+                so both spellings find the same records.</em></li>
+                <li>Residual artifacts remain and are reported rather than hidden: 957 redirects (4.6%) do not
+                resolve, the <code>(headword, homonym_index)</code> pair collides for 88 records, and small
+                fractions of definitions are empty, unusually short, or retain text resembling the start of an
+                adjacent record.</li>
+                <li>Annotations are monolingual and source-specific; they have not been mapped to Universal
+                Dependencies or exported through TEI Lex-0 or OntoLex-Lemon.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section__heading">Ethics and data availability</h2>
+        <div class="prose">
+            <p>Qaamuuska-NLP is derived from <em>Qaamuuska Af-Soomaaliga</em>, a copyrighted monolingual Somali
+            dictionary published by Roma Tre Press. The source dictionary is publicly accessible as a PDF, but
+            public access does not by itself imply permission to redistribute its lexical content in a new
+            structured form.</p>
+            <p>Permission to publicly redistribute the complete extracted lexical dataset is
+            <strong>pending</strong>. The released artifacts are the extraction code, aggregate statistics, and a
+            small illustrative sample of records, at
+            <a href="https://github.com/Ogaal-Labs/somali_dictionary_lexicon" target="_blank" rel="noopener">github.com/Ogaal-Labs/somali_dictionary_lexicon</a>.
+            The extraction code is MIT-licensed; that license applies only to the software and does not extend to
+            the lexical content of the source dictionary.</p>
+            <p>The resource is intended for research and educational work in Somali language technology. It
+            contains lexicographic material and no personal data, human-subject annotations, or information
+            collected from individual participants.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section__heading">Citation</h2>
+        <div class="prose">
+            <p>Abdullahi Mohamud Ahmed and Abdulkadir Ugas. <em>Qaamuuska-NLP: A Structured 46K-Entry Somali
+            Lexicon Extracted from a Print Dictionary.</em> arXiv preprint, August 2026.</p>
+        </div>
+    </section>
+
+</article>
+</template>
+
+<script src="src/app.js"></script>
+</body>
+</html>
